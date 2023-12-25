@@ -48,3 +48,4 @@ cypress/videos
 .saleor-app-auth.json
 
 **/content/compiled-locales
+.vercel

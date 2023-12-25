@@ -3,16 +3,25 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { GEOLOCATION } from "@/lib/const";
 import { CHANNELS, DEFAULT_CHANNEL, DEFAULT_LOCALE, LOCALES } from "@/lib/regions";
+import { get } from "@vercel/edge-config";
+export const config = { matcher: "/" };
 
-export function LocaleRedirectionMiddleware({
+export async function LocaleRedirectionMiddleware({
   nextUrl,
   headers,
   geo,
-}: NextRequest): NextMiddlewareResult | Promise<NextMiddlewareResult> {
+}: NextRequest): Promise<NextMiddlewareResult> {
   if (nextUrl.pathname !== "/") {
     // redirect should only be applied on homepage, without any region/locale chosen
     return null;
   }
+  const down = await get("down");
+  if (down) {
+    const url = nextUrl.clone();
+    url.pathname = "/down";
+    return NextResponse.redirect(url);
+  }
+
   if (!GEOLOCATION) {
     // redirection middleware can be turned on by setting the NEXT_PUBLIC_GEOLOCATION
     // env variable. If it's turned off we redirect to the default region
