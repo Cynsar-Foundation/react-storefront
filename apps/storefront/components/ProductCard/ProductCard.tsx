@@ -42,7 +42,13 @@ export function ProductCard({ product }: ProductCardProps) {
           <div className="bg-main active:bg-brand w-full aspect-1">
             <div className="bg-white w-full h-full relative object-contain ">
               {thumbnailUrl ? (
-                <Image src={thumbnailUrl} width={512} height={512} />
+                <Image
+                  src={thumbnailUrl}
+                  layout="fill"
+                  objectFit="cover"
+                  alt={translate(product, "name")}
+                  className="object-center"
+                />
               ) : (
                 <div className="grid justify-items-center content-center h-full w-full">
                   <PhotographIcon className="h-10 w-10 content-center" />
