@@ -44,6 +44,8 @@ function Stamp({ width = 32, height = 33, ...rest }: StampProps) {
         <Image src={logoImage} alt="Logo" width={36} height={37} />
       </div>
     );
+  } else {
+    return null;
   }
 }
 
